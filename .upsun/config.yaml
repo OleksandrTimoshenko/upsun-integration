@@ -1,0 +1,54 @@
+# Complete list of all available properties: https://docs.upsun.com/create-apps/app-reference.html
+applications:
+  test_project:
+    mounts:
+        "/staticfiles":
+            source: "local"
+            source_path: "static_assets"
+    source:
+      root: "/"
+    type: "python:3.10"
+    relationships:
+      postgresql:
+
+    web:
+      commands:
+        start: "gunicorn -w 4 -b unix:$SOCKET test_project.wsgi:application"
+      upstream:
+        socket_family: unix
+
+      locations:
+        "/":
+          passthru: true
+        "/static":
+          root: "static"
+          expires: 1h
+          allow: true
+
+    hooks:
+      build: |
+        set -eu
+
+        # Download the latest version of pip
+        python3.10 -m pip install --upgrade pip
+
+        # Install dependencies
+        pip install -r requirements.txt
+
+        # Collect static assets
+        python manage.py collectstatic    
+
+      deploy: python manage.py migrate
+
+services:
+  postgresql:
+    type: postgresql:12
+
+
+routes:
+  "https://{default}/":
+    type: upstream
+    upstream: "test_project:http"
+  "https://www.{default}":
+    type: redirect
+    to: "https://{default}/"
