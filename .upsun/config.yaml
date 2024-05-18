@@ -10,8 +10,7 @@ applications:
     type: "python:3.10"
     relationships:
       postgresql:
-        service: "postgresql"
-        endpoint: "postgresql:postgresql"
+
     web:
       commands:
         start: "gunicorn -w 4 -b unix:$SOCKET test_project.wsgi:application"
@@ -43,7 +42,7 @@ applications:
 
 services:
   postgresql:
-    type: postgresql:15 # All available versions are: 15, 14, 13, 12, 11
+    type: postgresql:12
 
 
 routes:
