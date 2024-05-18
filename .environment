@@ -1,4 +1,8 @@
 # Set database environment variables
+export DJANGO_SETTINGS_MODULE=config.settings.production
+export DJANGO_SECRET_KEY="$PLATFORM_PROJECT_ENTROPY"
+export DJANGO_ALLOWED_HOSTS=".platformsh.site"
+
 export DB_HOST="$POSTGRESQL_HOST"
 export DB_PORT="$POSTGRESQL_PORT"
 export DB_PATH="$POSTGRESQL_PATH"
