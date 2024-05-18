@@ -143,11 +143,11 @@ if (os.getenv('PLATFORM_APPLICATION_NAME') is not None):
         DATABASES = {
             'default': {
                 'ENGINE': 'django.db.backends.postgresql',
-                'NAME': os.getenv('DATABASE_PATH'),
-                'USER': os.getenv('DATABASE_USERNAME'),
-                'PASSWORD': os.getenv('DATABASE_PASSWORD'),
-                'HOST': os.getenv('DATABASE_HOST'),
-                'PORT': os.getenv('DATABASE_PORT'),
+                'NAME': os.getenv('DB_USERNAME'),
+                'USER': os.getenv('DB_USERNAME'),
+                'PASSWORD': os.getenv('DB_PASSWORD'),
+                'HOST': os.getenv('DB_HOST'),
+                'PORT': os.getenv('DB_PORT'),
             },
             'sqlite': {
                 'ENGINE': 'django.db.backends.sqlite3',
